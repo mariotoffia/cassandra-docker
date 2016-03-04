@@ -1,0 +1,29 @@
+exec: [ "cassandra", "-f" ]
+data_sources: [ file , environment, networking ]
+template_sources: [ file ]
+
+# env: dc, rack, seeds, snitch,cname
+environments:
+ production:
+  cassandra.yaml.erb:
+   target: /etc/cassandra/cassandra.yaml
+   config:
+    snitch: 'GossipingPropertyFileSnitch'
+    cname: 'Prod Cluster'
+  cassandra-rackdc.properties.erb:
+   target: /etc/cassandra/cassandra-rackdc.properties
+   config:
+    dc: DC1
+    rack: RACK1
+
+ development:
+  cassandra.yaml.erb:
+   target: /etc/cassandra/cassandra.yaml
+   config:
+    snitch: 'SimpleSnitch'
+    cname: 'Test Cluster'
+  cassandra-rackdc.properties.erb:
+   target: /etc/cassandra/cassandra-rackdc.properties
+   config:
+    dc: DC1
+    rack: RACK1			
